@@ -178,6 +178,12 @@ $string['exportentriestoxml'] = 'Export entries to XML file';
 $string['exportfile'] = 'Export entries to file';
 $string['exportglossary'] = 'Export glossary';
 $string['exporttomainglossary'] = 'Export to main glossary';
+/* Mathias - 2016-07-04 */
+$string['emptyglossary'] = 'Empty this glossary';
+$string['thiswilldeleteallentries'] = 'This will delete all articles in this glossary.';
+$string['deleteallentries'] = 'Delete all articles in this glossary';
+$string['allentriesdeleted'] = 'All articles deleted successfully';
+
 $string['filetoimport'] = 'File to import';
 $string['filetoimport_help'] = 'Browse for and select the XML file on your computer which contains the entries to import.';
 $string['fillfields'] = 'Concept and definition are mandatory fields.';

@@ -3117,6 +3117,11 @@ function glossary_extend_settings_navigation(settings_navigation $settings, navi
         $glossarynode->add(get_string('addentry', 'glossary'), new moodle_url('/mod/glossary/edit.php', array('cmid'=>$PAGE->cm->id)));
     }
 
+	/* Mathias, 2016-07-04 */
+    if (has_capability('mod/glossary:export', $PAGE->cm->context)) {
+        $glossarynode->add(get_string('emptyglossary', 'glossary'), new moodle_url('/mod/glossary/empty.php', array('id'=>$PAGE->cm->id)));
+    }
+
     $glossary = $DB->get_record('glossary', array("id" => $PAGE->cm->instance));
 
     if (!empty($CFG->enablerssfeeds) && !empty($CFG->glossary_enablerssfeeds) && $glossary->rsstype && $glossary->rssarticles && has_capability('mod/glossary:view', $PAGE->cm->context)) {

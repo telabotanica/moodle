@@ -143,6 +143,18 @@ $capabilities = array(
         )
     ),
 
+	/* Mathias, 2016-07-04 */
+    'mod/glossary:empty' => array(
+
+        'riskbitmask' => RISK_SPAM,
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
     'mod/glossary:approve' => array(
 
         'riskbitmask' => RISK_SPAM,
