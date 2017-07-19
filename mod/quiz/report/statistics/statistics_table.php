@@ -169,8 +169,7 @@ class quiz_statistics_table extends flexible_table {
      * @return string contents of this table cell.
      */
     protected function col_actions($questionstat) {
-        return quiz_question_action_icons($this->quiz, $this->cmid,
-                $questionstat->question, $this->baseurl, $questionstat->variant);
+        return quiz_question_action_icons($this->quiz, $this->cmid, $questionstat->question, $this->baseurl);
     }
 
     /**

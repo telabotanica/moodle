@@ -819,23 +819,20 @@ class grade_report_grader extends grade_report {
                     $fillercell->header = false;
                     $headingrow->cells[] = $fillercell;
                 } else if ($type == 'category') {
-                    // Make sure the grade category has a grade total or at least has child grade items.
-                    if (grade_tree::can_output_item($element)) {
-                        // Element is a category.
-                        $categorycell = new html_table_cell();
-                        $categorycell->attributes['class'] = 'category ' . $catlevel;
-                        $categorycell->colspan = $colspan;
-                        $categorycell->text = $this->get_course_header($element);
-                        $categorycell->header = true;
-                        $categorycell->scope = 'col';
+                    // Element is a category
+                    $categorycell = new html_table_cell();
+                    $categorycell->attributes['class'] = 'category ' . $catlevel;
+                    $categorycell->colspan = $colspan;
+                    $categorycell->text = $this->get_course_header($element);
+                    $categorycell->header = true;
+                    $categorycell->scope = 'col';
 
-                        // Print icons.
-                        if ($USER->gradeediting[$this->courseid]) {
-                            $categorycell->text .= $this->get_icons($element);
-                        }
-
-                        $headingrow->cells[] = $categorycell;
+                    // Print icons
+                    if ($USER->gradeediting[$this->courseid]) {
+                        $categorycell->text .= $this->get_icons($element);
                     }
+
+                    $headingrow->cells[] = $categorycell;
                 } else {
                     // Element is a grade_item
                     if ($element['object']->id == $this->sortitemid) {
@@ -1067,7 +1064,7 @@ class grade_report_grader extends grade_report {
                                 $nogradestr = $this->get_lang_string('nooutcome', 'grades');
                             }
                             $attributes = array('tabindex' => $tabindices[$item->id]['grade'], 'id'=>'grade_'.$userid.'_'.$item->id);
-                            $gradelabel = $fullname . ' ' . $item->get_name(true);
+                            $gradelabel = $fullname . ' ' . $item->itemname;
                             $itemcell->text .= html_writer::label(
                                 get_string('useractivitygrade', 'gradereport_grader', $gradelabel), $attributes['id'], false,
                                     array('class' => 'accesshide'));
@@ -1087,7 +1084,7 @@ class grade_report_grader extends grade_report {
                     } else if ($item->gradetype != GRADE_TYPE_TEXT) { // Value type
                         if ($quickgrading and $grade->is_editable()) {
                             $value = format_float($gradeval, $decimalpoints);
-                            $gradelabel = $fullname . ' ' . $item->get_name(true);
+                            $gradelabel = $fullname . ' ' . $item->itemname;
                             $itemcell->text .= '<label class="accesshide" for="grade_'.$userid.'_'.$item->id.'">'
                                           .get_string('useractivitygrade', 'gradereport_grader', $gradelabel).'</label>';
                             $itemcell->text .= '<input size="6" tabindex="' . $tabindices[$item->id]['grade']
@@ -1101,7 +1098,7 @@ class grade_report_grader extends grade_report {
 
                     // If quickfeedback is on, print an input element
                     if ($showquickfeedback and $grade->is_editable()) {
-                        $feedbacklabel = $fullname . ' ' . $item->get_name(true);
+                        $feedbacklabel = $fullname . ' ' . $item->itemname;
                         $itemcell->text .= '<label class="accesshide" for="feedback_'.$userid.'_'.$item->id.'">'
                                       .get_string('useractivityfeedback', 'gradereport_grader', $feedbacklabel).'</label>';
                         $itemcell->text .= '<input class="quickfeedback" tabindex="' . $tabindices[$item->id]['feedback'].'" id="feedback_'.$userid.'_'.$item->id

@@ -471,14 +471,6 @@ class structure {
     }
 
     /**
-     * Get the number of questions in the quiz.
-     * @return int the number of questions in the quiz.
-     */
-    public function get_section_count() {
-        return count($this->sections);
-    }
-
-    /**
      * Get the overall quiz grade formatted for display.
      * @return string the maximum grade for this quiz.
      */
@@ -884,7 +876,7 @@ class structure {
 
         $this->check_can_be_edited();
 
-        if ($this->is_only_slot_in_section($slotnumber) && $this->get_section_count() > 1) {
+        if ($this->is_only_slot_in_section($slotnumber)) {
             throw new \coding_exception('You cannot remove the last slot in a section.');
         }
 

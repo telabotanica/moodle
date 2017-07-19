@@ -1663,16 +1663,18 @@ abstract class repository implements cacheable_object {
     }
 
     /**
-     * Get a unique file path in which to save the file.
-     *
-     * The filename returned will be removed at the end of the request and
-     * should not be relied upon to exist in subsequent requests.
+     * Decide where to save the file, can be overwriten by subclass
      *
      * @param string $filename file name
      * @return file path
      */
     public function prepare_file($filename) {
-        return sprintf('%s/%s', make_request_directory(), $filename);
+        global $CFG;
+        $dir = make_temp_directory('download/'.get_class($this).'/');
+        while (empty($filename) || file_exists($dir.$filename)) {
+            $filename = uniqid('', true).'_'.time().'.tmp';
+        }
+        return $dir.$filename;
     }
 
     /**

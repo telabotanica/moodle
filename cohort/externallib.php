@@ -208,7 +208,7 @@ class core_cohort_external extends external_api {
         return new external_function_parameters(
             array(
                 'cohortids' => new external_multiple_structure(new external_value(PARAM_INT, 'Cohort ID')
-                    , 'List of cohort id. A cohort id is an integer.', VALUE_DEFAULT, array()),
+                    , 'List of cohort id. A cohort id is an integer.'),
             )
         );
     }
@@ -220,19 +220,16 @@ class core_cohort_external extends external_api {
      * @return array of cohort objects (id, courseid, name)
      * @since Moodle 2.5
      */
-    public static function get_cohorts($cohortids = array()) {
+    public static function get_cohorts($cohortids) {
         global $DB;
 
         $params = self::validate_parameters(self::get_cohorts_parameters(), array('cohortids' => $cohortids));
 
-        if (empty($cohortids)) {
-            $cohorts = $DB->get_records('cohort');
-        } else {
-            $cohorts = $DB->get_records_list('cohort', 'id', $params['cohortids']);
-        }
+        $cohorts = array();
+        foreach ($params['cohortids'] as $cohortid) {
+            // Validate params.
+            $cohort = $DB->get_record('cohort', array('id' => $cohortid), '*', MUST_EXIST);
 
-        $cohortsinfo = array();
-        foreach ($cohorts as $cohort) {
             // Now security checks.
             $context = context::instance_by_id($cohort->contextid, MUST_EXIST);
             if ($context->contextlevel != CONTEXT_COURSECAT and $context->contextlevel != CONTEXT_SYSTEM) {
@@ -247,11 +244,11 @@ class core_cohort_external extends external_api {
                 external_format_text($cohort->description, $cohort->descriptionformat,
                         $context->id, 'cohort', 'description', $cohort->id);
 
-            $cohortsinfo[] = (array) $cohort;
+            $cohorts[] = (array) $cohort;
         }
-        return $cohortsinfo;
-    }
 
+        return $cohorts;
+    }
 
     /**
      * Returns description of method result value
