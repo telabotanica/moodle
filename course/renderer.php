@@ -797,7 +797,9 @@ class core_course_renderer extends plugin_renderer_base {
                 'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation')) . $accesstext .
                 html_writer::tag('span', $instancename . $altname, array('class' => 'instancename'));
         if ($mod->uservisible) {
-            $output .= html_writer::link($url, $activitylink, array('class' => $linkclasses, 'onclick' => $onclick)) .
+			// @WARNING bricolage pour redefinir les icones, qui peuvent être différentes pour une
+			// même activité (ex: page)
+            $output .= html_writer::link($url, $activitylink, array('class' => $linkclasses, 'onclick' => $onclick, "id" => 'lien-activite-' . $mod->id)) .
                     $groupinglabel;
         } else {
             // We may be displaying this just in order to show information
@@ -2073,7 +2075,7 @@ class core_course_renderer extends plugin_renderer_base {
                     'viewmoreurl' => new moodle_url('/course/index.php'),
                     'viewmoretext' => new lang_string('fulllistofcourses')));
 
-        $chelper->set_attributes(array('class' => 'frontpage-course-list-all'));
+        $chelper->set_attributes(array('class' => 'frontpage-course-list-all', 'id' => 'liste-des-cours'));
         $courses = coursecat::get(0)->get_courses($chelper->get_courses_display_options());
         $totalcount = coursecat::get(0)->get_courses_count($chelper->get_courses_display_options());
         if (!$totalcount && !$this->page->user_is_editing() && has_capability('moodle/course:create', context_system::instance())) {
