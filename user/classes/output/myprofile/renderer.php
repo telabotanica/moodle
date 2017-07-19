@@ -46,7 +46,24 @@ class renderer extends \plugin_renderer_base {
         foreach ($categories as $category) {
             $return .= $this->render($category);
         }
-        $return .= \html_writer::end_tag('div');
+		// catégorie à la main (@CESTMAL) pour ajouter un lien de désinscription
+		// (plugin "Goodbye")
+		global $USER;
+		// seulement si le profil affiche est celui de l'utilisateur en cours
+		if (! isset($_GET['id']) || $_GET['id'] == $USER->id) {
+			$goodbyeUrl = new \moodle_url('/local/goodbye/index.php');
+			$return .= '<section class="node_category">';
+			$return .= '<h3>Désinscription</h3>';
+			$return .= '<ul>';
+			$return .= '<li>';
+			$return .= '<a href="' . $goodbyeUrl . '">';
+			$return .= 'Supprimer mon compte';
+			$return .= '</a>';
+			$return .= '</li>';
+			$return .= '</ul>';
+			$return .= '</section>';
+			$return .= \html_writer::end_tag('div');
+		}
         return $return;
     }
 

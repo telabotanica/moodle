@@ -198,6 +198,9 @@ profile_view($user, $usercontext);
 echo $OUTPUT->header();
 echo '<div class="userprofile">';
 
+$headerinfo = array('heading' => fullname($user), 'user' => $user, 'usercontext' => $usercontext);
+echo $OUTPUT->context_header($headerinfo, 2);
+
 if ($user->description && !isset($hiddenfields['description'])) {
     echo '<div class="description">';
     if (!empty($CFG->profilesforenrolledusersonly) && !$currentuser &&
