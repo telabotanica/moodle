@@ -64,7 +64,12 @@ if (!empty($data) || (!empty($p) && !empty($s))) {
         echo $OUTPUT->header();
         echo $OUTPUT->box_start('generalbox centerpara boxwidthnormal boxaligncenter');
         echo "<p>".get_string("alreadyconfirmed")."</p>\n";
-        echo $OUTPUT->single_button("$CFG->wwwroot/course/", get_string('courses'));
+		// Modif cracra de la redirection après confirmation, en attendant que la demande soit remplie :
+		// https://tracker.moodle.org/browse/MDL-34281
+		// Mathias - 2016-04-01
+		// => également modifié ligne 104
+        echo $OUTPUT->single_button("$CFG->wwwroot/", "Retour à la page d'accueil");
+        // echo $OUTPUT->single_button("$CFG->wwwroot/course/", get_string('courses'));
         echo $OUTPUT->box_end();
         echo $OUTPUT->footer();
         exit;
@@ -96,7 +101,9 @@ if (!empty($data) || (!empty($p) && !empty($s))) {
         echo $OUTPUT->box_start('generalbox centerpara boxwidthnormal boxaligncenter');
         echo "<h3>".get_string("thanks").", ". fullname($USER) . "</h3>\n";
         echo "<p>".get_string("confirmed")."</p>\n";
-        echo $OUTPUT->single_button("$CFG->wwwroot/course/", get_string('courses'));
+		// Modif cracra, voir ligne 67
+        echo $OUTPUT->single_button("$CFG->wwwroot/", "Retour à la page d'accueil");
+        // echo $OUTPUT->single_button("$CFG->wwwroot/course/", get_string('courses'));
         echo $OUTPUT->box_end();
         echo $OUTPUT->footer();
         exit;
