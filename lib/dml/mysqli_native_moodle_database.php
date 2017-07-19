@@ -182,6 +182,12 @@ class mysqli_native_moodle_database extends moodle_database {
 
         // Get the default database engine.
         $sql = "SELECT @@default_storage_engine engine";
+	// mathias - 2016-02-17 - MySQL est trop vieux sur sequoia et la variable ne s'appelle pas pareil
+	// (bonjour la rétrocompatibilité de m**de)
+	// solution trouvée sur https://tracker.moodle.org/browse/MDL-50633
+	// edit : MySQL 5.1 était utilisé par erreur; en repassant en 5.5 ça devrait marcher sans changer
+	// le nom de variable
+        //$sql = "SELECT @@storage_engine engine";
         $this->query_start($sql, NULL, SQL_QUERY_AUX);
         $result = $this->mysqli->query($sql);
         $this->query_end($result);
