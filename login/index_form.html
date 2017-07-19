@@ -16,7 +16,9 @@ if (empty($CFG->authloginviaemail)) {
     $strusername = get_string('usernameemail');
 }
 ?>
-<div class="loginbox clearfix <?php echo $columns ?>">
+<!-- bricolage en dur - Mathias, 2016-04-07 -->
+<!--<div class="loginbox clearfix <?php echo $columns ?>">-->
+<div class="loginbox clearfix page-login-perso">
   <div class="loginpanel">
 <?php
   if (($CFG->registerauth == 'email') || !empty($CFG->registerauth)) { ?>
@@ -24,6 +26,14 @@ if (empty($CFG->authloginviaemail)) {
 <?php
   } ?>
     <h2><?php print_string("login") ?></h2>
+	  <div class="subcontent">
+		<p>
+			Vous pouvez utiliser votre compte <img class="logo-tb" src="http://resources.tela-botanica.org/tb/img/24x24/logo.png"></i><a href="http://www.tela-botanica.org" target="_blank">Tela Botanica</a>, il sera reconnu aussi !
+		</p>
+		<p>
+			*Attention, une fois inscrit(e)/identifié(e) à la plateforme, vous devrez vous rendre sur le cours de votre choix pour vous y inscrire.
+		</p>
+	  </div>
       <div class="subcontent loginsub">
         <?php
           if (!empty($errormsg)) {
@@ -35,33 +45,38 @@ if (empty($CFG->authloginviaemail)) {
         ?>
         <form action="<?php echo $CFG->httpswwwroot; ?>/login/index.php" method="post" id="login" <?php echo $autocomplete; ?> >
           <div class="loginform">
-            <div class="form-label"><label for="username"><?php echo($strusername) ?></label></div>
+            <!--<div class="form-label"><label for="username"><?php echo($strusername) ?></label></div>-->
             <div class="form-input">
-              <input type="text" name="username" id="username" size="15" value="<?php p($frm->username) ?>" />
+              <input type="text" name="username" id="username" size="15" placeholder="<?php echo($strusername) ?>" value="<?php p($frm->username) ?>" />
             </div>
             <div class="clearer"><!-- --></div>
-            <div class="form-label"><label for="password"><?php print_string("password") ?></label></div>
+            <!--<div class="form-label"><label for="password"><?php print_string("password") ?></label></div>-->
             <div class="form-input">
-              <input type="password" name="password" id="password" size="15" value="" <?php echo $autocomplete; ?> />
+              <input type="password" name="password" id="password" size="15" placeholder="<?php print_string("password") ?>" value="" <?php echo $autocomplete; ?> />
             </div>
           </div>
-            <div class="clearer"><!-- --></div>
+          <div class="loginactions">
               <?php if (isset($CFG->rememberusername) and $CFG->rememberusername == 2) { ?>
               <div class="rememberpass">
                   <input type="checkbox" name="rememberusername" id="rememberusername" value="1" <?php if ($frm->username) {echo 'checked="checked"';} ?> />
                   <label for="rememberusername"><?php print_string('rememberusername', 'admin') ?></label>
               </div>
               <?php } ?>
-          <div class="clearer"><!-- --></div>
-          <input type="submit" id="loginbtn" value="<?php print_string("login") ?>" />
-          <div class="forgetpass"><a href="forgot_password.php"><?php print_string("forgotten") ?></a></div>
+			  <!-- Connexion ! -->
+			  <input type="submit" id="loginbtn" value="<?php print_string("login") ?>" />
+		  </div>
+          <div class="loginactions">
+			  <div class="forgetpass"><a href="forgot_password.php"><?php print_string("forgotten") ?></a></div>
+		  </div>
+		  <!-- Tricherie @CRACRA pour donner un titre aux boutons de connexion oAuth2 -->
+		  <!--<h2>Avec un compte Google / Facebook</h2>-->
         </form>
-        <div class="desc">
+        <!--<div class="desc">
             <?php
                 echo get_string("cookiesenabled");
                 echo $OUTPUT->help_icon('cookiesenabled');
             ?>
-        </div>
+        </div>-->
       </div>
 
 <?php if ($CFG->guestloginbutton and !isguestuser()) {  ?>
@@ -87,7 +102,7 @@ if (empty($CFG->authloginviaemail)) {
               print_string("loginstepsnone");
           } else if ($CFG->registerauth == 'email') {
               if (!empty($CFG->auth_instructions)) {
-                  echo format_text($CFG->auth_instructions);
+                  //echo format_text($CFG->auth_instructions);
               } else {
                   print_string("loginsteps", "", "signup.php");
               } ?>
